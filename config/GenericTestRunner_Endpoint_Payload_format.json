@@ -1,0 +1,77 @@
+[
+  {
+    "product_name": "QP",
+    "end_point": [
+      {
+        "QA": "https://atlantis-qa4-dashboard.quantela.com/qp-gateway-service/1.0.0/public/token",
+        "Dev": "https://qp-dev-az.quantela.com/qp-gateway-service/1.0.0/public/token"
+      }
+    ],
+    "type": "POST",
+    "header": [
+      {
+        "QA": {
+          "Origin": "https://atlantis-qa4-dashboard.quantela.com",
+          "Content-Type": "application/json"
+        },
+        "Dev": {
+          "Origin": "https://qp-dev-az.quantela.com",
+          "Content-Type": "application/json"
+        }
+      }
+    ],
+    "input": [
+      {
+        "QA": {
+          "username": "dileep@apitesting.com",
+          "password": "Quantela@12345",
+          "grant_type": "password"
+        },
+        "Dev": {
+          "username": "gopi@prague-city.com",
+          "password": "Test@123",
+          "grant_type": "password"
+        }
+      }
+    ],
+    "isStatic": true,
+    "responseCode": 200,
+    "expected_output": {
+      "$schema": "http://json-schema.org/draft-06/schema#",
+      "$ref": "#/definitions/Welcome2",
+      "definitions": {
+        "Welcome2": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "access_token": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "refresh_token": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "scope": {
+              "type": "string"
+            },
+            "token_type": {
+              "type": "string"
+            },
+            "expires_in": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "access_token",
+            "expires_in",
+            "refresh_token",
+            "scope",
+            "token_type"
+          ],
+          "title": "Welcome2"
+        }
+      }
+    }
+  }
+]
