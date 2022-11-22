@@ -1,4 +1,5 @@
 const request = require('request');
+const validateSchema = require('./schema-validator')
 
 function prepareRequestOptions(env, config) {
     const options = {};
@@ -9,22 +10,23 @@ function prepareRequestOptions(env, config) {
     return options;
 }
 
-function makeRequest(config, schema) {
+async function makeRequest(config, schema) {
     const environments = Object.keys(config["end_point"][0]);
     const result = {}
+    console.log(environments);
     for (env of environments) {
+        console.log("Making request for environment...", env)
         const options = prepareRequestOptions(env, config);
-        request(options, function (error, response) {
+        await request(options, function (error, response) {
             if (error) {
-                throw new Error(error);
-            } 
-            console.log("Making request for environment...", env)
-            result[env] = response
-            console.log(response.body);
+                console.log(`Error in making request for env: ${env} => ${error}`)
+            } else {
+                result[env] = response
+                console.log(response.body);
+            }
         });
     }
     return result;
 }
-
 
 module.exports = makeRequest;

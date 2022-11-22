@@ -1,8 +1,7 @@
 const validate = require('jsonschema').validate;
 
-function validateSchema(inputJSON, shema) {
-    // console.log(validate(inputJSON, shema))
-    return true;
+function validateSchema(inputJSON, schema) {
+    return validate(inputJSON, schema)
 }
 
 module.exports = validateSchema;

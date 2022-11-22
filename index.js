@@ -3,17 +3,23 @@ const endpointConfig = require('./config/GenericTestRunner_Endpoint_Payload_form
 const schema = require('./config/schema.json')
 const makeRequest = require('./request-handler')
 
-if (validateSchema(endpointConfig, schema) === false) {
-    console.log("The given endpoint shema is configured incorrectly!!!")
-} {
-    console.log("The endpoint shema is valid.")
-    endpointConfig.forEach(serviceConfig => {
-        const response = makeRequest(serviceConfig);
-        if (response.error) {
-            console.log("The service is not running as expected")
-        } else {
-            console.log("The response code is ...")
-            console.log(response)
-        }
-    });
+
+const result = validateSchema(endpointConfig, schema);
+async function run() {
+    if (!result.errors) {
+        console.log("The given endpoint shema is configured incorrectly!!!")
+    } else {
+        console.log("The endpoint shema is valid.")
+        for (serviceConfig of endpointConfig) {
+            const response = await makeRequest(serviceConfig);
+            if (response.error) {
+                console.log("The service is not running as expected")
+            } else {
+                console.log("The response code is ...")
+                console.log(response)
+            }
+        };
+    }
 }
+
+run();
