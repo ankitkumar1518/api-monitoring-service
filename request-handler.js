@@ -1,4 +1,5 @@
 const request = require('request');
+const logger = require('./logger')
 const validateSchema = require('./schema-validator')
 
 function prepareRequestOptions(env, config) {
@@ -13,37 +14,43 @@ function prepareRequestOptions(env, config) {
 function doRequest(options) {
     return new Promise(function (resolve, reject) {
         request(options, function (error, response) {
-        if (!error && response.statusCode === 200) {
-            resolve(response);
-        } else {
-            reject(error);
-        }
+            if (!error && response.statusCode === 200) {
+                resolve(response);
+            } else {
+                reject(error);
+            }
         });
     });
 }
 
 async function makeRequest(config, schema) {
     const environments = Object.keys(config["end_points"]);
-    const result = {}
+    const result = [];
     for (env of environments) {
+        const stats = {}
+        let start = new Date();
         const options = prepareRequestOptions(env, config);
-        
+        stats["Product Name"] = config.product_name;
+        stats["Microservice name"] = config.service_name;
+        stats["env:endpoint"] = `${env}: ${options.url}`;
+        stats["Description"] = config.description;
         console.log("\n\n\n\n")
-        console.log("Microservice name: ", config.service_name);
-        console.log(`env: ${env}, endpoint: ${options.url}`);
-        console.log("Description: ", config.description);
-        console.time("Latency");
         try {
             let response = await doRequest(options);
-            console.log("Request status: Pass")
-            console.timeEnd("Latency")
-            console.log("Time of execution: ", new Date())
+            stats["Status"] = "Pass"
+            stats["Latency"] = `${(new Date - start)/1000}s`
         } catch (error) {
-            console.log("Request status: Fail")
-            console.timeEnd("Latency")
-            console.log("Time of execution: ", new Date())
-            console.error(error);
+            stats["Status"] = "Fail"
+            stats["Latency"] = `${(new Date - start)/1000}s`
+            stats["Error"] = JSON.parse(JSON.stringify(error));
         }
+        stats["Time of execution"] = new Date();
+        if (!stats.Error) {
+            logger.info(stats, {created_at: new Date()});
+        } else {
+            logger.error(stats, {created_at: new Date()});
+        }
+        result.push(stats);
     }
     return result;
 }
