@@ -1,4 +1,4 @@
-const rp = require('request-promise')
+const request = require('request-promise')
 const logger = require('./logger')
 const validateSchema = require('./schema-validator')
 
@@ -23,14 +23,13 @@ async function makeRequest(config, authRequired, authData) {
         const stats = {}
         let start = new Date();
         const options = prepareRequestOptions(env, config, authRequired, authData);
-        console.log("options: ", options)
         stats["Product Name"] = config.product_name;
         stats["Microservice name"] = config.service_name;
         stats["env:endpoint"] = `${env}: ${options.url}`;
         stats["Description"] = config.description;
         console.log("\n\n\n\n")
         try {
-            let response = await rp(options);
+            let response = await request(options);
             stats["Status"] = "Pass"
             stats["Latency"] = `${(new Date - start)/1000}s`
         } catch (error) {
@@ -40,9 +39,9 @@ async function makeRequest(config, authRequired, authData) {
         }
         stats["Time of execution"] = new Date();
         if (!stats.Error) {
-            logger.info(stats, {created_at: new Date()});
+            logger.info({data: stats}, "The endpoint is up and running!");
         } else {
-            logger.error(stats, {created_at: new Date()});
+            logger.error({data: stats}, "Error encountered while hitting the endpoint");
         }
         result.push(stats);
     }

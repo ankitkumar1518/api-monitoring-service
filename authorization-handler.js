@@ -1,4 +1,4 @@
-const rp = require('request-promise')
+const request = require('request-promise')
 const logger = require('./logger')
 const validateSchema = require('./schema-validator')
 
@@ -18,7 +18,7 @@ async function getAuthData(config) {
         const options = prepareRequestOptions(config[env]);
         result[env] = {};
         try {
-            const response = await rp(options);
+            const response = await request(options);
             const responseBody = JSON.parse(response);
             const target_key_name = config[env]["target_key_name"];
             const response_token_key = responseBody[config[env]["response_token_key"]];
