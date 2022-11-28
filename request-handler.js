@@ -22,6 +22,7 @@ async function makeRequest(config, authRequired, authData) {
     for (env of environments) {
         const stats = {}
         let start = new Date();
+        console.log("------")
         const options = prepareRequestOptions(env, config, authRequired, authData);
         stats["Product Name"] = config.product_name;
         stats["Microservice name"] = config.service_name;
@@ -39,9 +40,11 @@ async function makeRequest(config, authRequired, authData) {
         }
         stats["Time of execution"] = new Date();
         if (!stats.Error) {
-            logger.info({data: stats}, "The endpoint is up and running!");
+            // logger.info({data: stats}, "The endpoint is up and running!");
+            logger.info("The endpoint is up and running!", {data: stats});
         } else {
-            logger.error({data: stats}, "Error encountered while hitting the endpoint");
+            // logger.error({data: stats}, "Error encountered while hitting the endpoint");
+            logger.error("Error encountered while hitting the endpoint", {data: stats});
         }
         result.push(stats);
     }
