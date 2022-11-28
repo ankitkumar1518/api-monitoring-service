@@ -1,4 +1,3 @@
-const { createLogger, format, transports, config } = require('winston');
 const pino = require('pino');
 const moment = require("moment");
 
@@ -14,16 +13,11 @@ const levels = {
 }
 
 const options = {
-    mixin() {
-        return {
-            "application": "data-pipeline",
-            "timestamp": moment().toISOString()
-        }
-    },
     "customLevels": levels,
     "useOnlyCustomLevels": true,
     "messageKey": "message",
-    "timestamp": false,
+    // "timestamp": false,
+    "translateTime": "SYS:mm-dd-yyyy hh:mm:ss TT",
     "level": "fatal",
     "formatters": {
         level(label, number) {
@@ -35,18 +29,18 @@ const options = {
     }
 }
 
+const streams = [
+    { stream: process.stdout },
+    { stream: pino.destination('./logs/api-monitoring.log') },
+  ];
+
 const stream = pino.destination({
     dest: './logs/api-monitoring.log',
-    minLength: 1024, //4096 Buffer before writing
-    sync: false, // Asynchronous logging
+    minLength: 1024,
+    sync: false,
 })
 
 
-const logger = createLogger({
-    transports: [
-        new transports.Console(),
-        new transports.File({ filename: './logs/api-monitoring.log' })
-    ]
-});
-// module.exports = logger;
+
+// module.exports = pino(options, pino.multistream(streams));
 module.exports = pino(options, stream);
