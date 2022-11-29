@@ -1,6 +1,7 @@
 const request = require('request-promise')
 const logger = require('./logger')
 const validateSchema = require('./schema-validator')
+const _ = require('lodash')
 
 function prepareRequestOptions(env, config, authRequired, authData) {
     const options = {};
@@ -21,29 +22,41 @@ async function makeRequest(config, authRequired, authData) {
     const result = [];
     for (env of environments) {
         const stats = {}
-        let start = new Date();
-        console.log("------")
+        const start = new Date();
         const options = prepareRequestOptions(env, config, authRequired, authData);
         stats["Product Name"] = config.product_name;
         stats["Microservice name"] = config.service_name;
         stats["env:endpoint"] = `${env}: ${options.url}`;
         stats["Description"] = config.description;
-        console.log("\n\n\n\n")
         try {
-            let response = await request(options);
-            stats["Status"] = "Pass"
-            stats["Latency"] = `${(new Date - start)/1000}s`
+            const response = await request(options);
+            let isValid;
+            if (config.isStatic === true) {
+                isValid = _.isEqual(JSON.parse(response), config.expected_output)
+            } else {
+                isValid = validateSchema(JSON.parse(response), config.expected_output)
+            }
+            if (isValid === true) {
+                stats["Status"] = "Pass"
+                stats["Latency"] = `${(new Date - start)/1000}s`
+            } else {
+                const error = new Error('The response does not match the expected output');
+                error.message = "The response does not match the expected output"
+                throw error
+            }
         } catch (error) {
             stats["Status"] = "Fail"
             stats["Latency"] = `${(new Date - start)/1000}s`
-            stats["Error"] = JSON.parse(JSON.stringify(error));
+            if (error.message) {
+                stats["Error"] = error.message;
+            } else {
+                stats["Error"] = JSON.parse(JSON.stringify(error));
+            }
         }
         stats["Time of execution"] = new Date();
         if (!stats.Error) {
-            // logger.info({data: stats}, "The endpoint is up and running!");
             logger.info("The endpoint is up and running!", {data: stats});
         } else {
-            // logger.error({data: stats}, "Error encountered while hitting the endpoint");
             logger.error("Error encountered while hitting the endpoint", {data: stats});
         }
         result.push(stats);
