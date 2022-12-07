@@ -28,6 +28,7 @@ async function makeRequest(config, authRequired, authData) {
         stats["Microservice name"] = config.service_name;
         stats["env:endpoint"] = `${env}: ${options.url}`;
         stats["Description"] = config.description;
+        stats["identifier"] = config.identifier;
         try {
             const response = await request(options);
             let isValid;

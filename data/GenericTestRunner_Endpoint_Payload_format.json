@@ -14,135 +14,1541 @@
                     "grant_type": "password"
                 },
                 "response_token_key": "access_token",
-                "target_key_name": "Authorization"
+                "target_key_name": "Authorization",
+                "url_param": {}
             }
         },
         "test_cases": [
             {
                 "product_name": "QP",
                 "service_name": "qp-gateway-service",
-                "description": "this is placeholder description",
+                "description": "Get the Details of the loggedin user",
+                "identifier": "qp-gateway-get-login-details",
                 "end_points": {
-                    "QA": "https://atlantis-qa4-dashboard.quantela.com/qp-core-service/1.0.0/containers/assets"
+                    "QA": "https://atlantis-qa4-dashboard.quantela.com/qp-gateway-service/1.0.0/users/apitesting.com/me"
                 },
                 "type": "GET",
                 "header": {
                     "Authorization": "Bearer ",
                     "Content-Type": "application/json"
                 },
-                "input": {
-                    "QA": {
-                        "username": "dileep@apitesting.com",
-                        "password": "Quantela@12345",
-                        "grant_type": "password"
-                    }
-                },
+                "input": {},
                 "isStatic": false,
                 "responseCode": 200,
                 "expected_output": {
                     "$schema": "http://json-schema.org/draft-06/schema#",
-                    "$ref": "#/definitions/Welcome2",
+                    "$ref": "#/definitions/Welcome3",
                     "definitions": {
-                        "Welcome2": {
+                        "Welcome3": {
                             "type": "object",
                             "additionalProperties": false,
                             "properties": {
-                                "access_token": {
+                                "userId": {
                                     "type": "string",
                                     "format": "uuid"
                                 },
-                                "refresh_token": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "tenantId": {
+                                    "type": "string"
+                                },
+                                "firstname": {
+                                    "type": "string"
+                                },
+                                "lastname": {
+                                    "type": "string"
+                                },
+                                "roles": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "roleId": {
                                     "type": "string",
                                     "format": "uuid"
                                 },
-                                "scope": {
+                                "roleName": {
                                     "type": "string"
                                 },
-                                "token_type": {
+                                "email": {
                                     "type": "string"
                                 },
-                                "expires_in": {
+                                "mobile": {
+                                    "type": "string"
+                                },
+                                "departmentName": {
+                                    "type": "string"
+                                },
+                                "departmentId": {
+                                    "type": "string"
+                                },
+                                "consent": {
+                                    "$ref": "#/definitions/Consent"
+                                },
+                                "attributes": {
+                                    "$ref": "#/definitions/Attributes"
+                                },
+                                "userStoreDomain": {
+                                    "type": "string"
+                                },
+                                "isSecondaryUser": {
+                                    "type": "boolean"
+                                },
+                                "mfa": {
+                                    "$ref": "#/definitions/Mfa"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "defaultAdmin": {
+                                    "type": "string"
+                                },
+                                "created": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "lastUpdated": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "_search_after": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    }
+                                },
+                                "_total_count": {
+                                    "type": "integer"
+                                },
+                                "docType": {
+                                    "type": "string"
+                                },
+                                "role": {
+                                    "$ref": "#/definitions/Role"
+                                },
+                                "entitlements": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Entitlement"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "_search_after",
+                                "_total_count",
+                                "attributes",
+                                "consent",
+                                "created",
+                                "defaultAdmin",
+                                "departmentId",
+                                "departmentName",
+                                "docType",
+                                "email",
+                                "entitlements",
+                                "firstname",
+                                "isSecondaryUser",
+                                "lastUpdated",
+                                "lastname",
+                                "mfa",
+                                "mobile",
+                                "role",
+                                "roleId",
+                                "roleName",
+                                "roles",
+                                "status",
+                                "tenantId",
+                                "userId",
+                                "userStoreDomain",
+                                "username"
+                            ],
+                            "title": "Welcome3"
+                        },
+                        "Attributes": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "favourites": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "loopsInterval": {
+                                    "type": "integer"
+                                },
+                                "loops": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "theme": {
+                                    "type": "string"
+                                },
+                                "locale": {
+                                    "type": "string"
+                                },
+                                "defaultDashboard": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "defaultDashboard",
+                                "favourites",
+                                "locale",
+                                "loops",
+                                "loopsInterval",
+                                "theme"
+                            ],
+                            "title": "Attributes"
+                        },
+                        "Consent": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "_search_after": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "lastUpdated": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "acceptedOn": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Datum"
+                                    }
+                                },
+                                "created": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "docType": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "_total_count": {
+                                    "type": "integer"
+                                },
+                                "version": {
                                     "type": "integer"
                                 }
                             },
                             "required": [
-                                "access_token",
-                                "expires_in",
-                                "refresh_token",
-                                "scope",
-                                "token_type"
+                                "_search_after",
+                                "_total_count",
+                                "acceptedOn",
+                                "created",
+                                "data",
+                                "docType",
+                                "id",
+                                "lastUpdated",
+                                "version"
                             ],
-                            "title": "Welcome2"
+                            "title": "Consent"
+                        },
+                        "Datum": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "url": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "description",
+                                "id",
+                                "name",
+                                "url"
+                            ],
+                            "title": "Datum"
+                        },
+                        "Entitlement": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "docType": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "displayName": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "created": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "lastUpdated": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "_search_after": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    }
+                                },
+                                "_total_count": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "_search_after",
+                                "_total_count",
+                                "created",
+                                "description",
+                                "displayName",
+                                "docType",
+                                "id",
+                                "lastUpdated",
+                                "name"
+                            ],
+                            "title": "Entitlement"
+                        },
+                        "Mfa": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "enabled"
+                            ],
+                            "title": "Mfa"
+                        },
+                        "Role": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "docType": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "tenantId": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "displayName": {
+                                    "type": "string"
+                                },
+                                "unRestricted": {
+                                    "type": "boolean"
+                                },
+                                "allowChildRoles": {
+                                    "type": "boolean"
+                                },
+                                "type": {
+                                    "type": "string"
+                                },
+                                "parent": {
+                                    "type": "string"
+                                },
+                                "parentId": {
+                                    "type": "string"
+                                },
+                                "regions": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "domains": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "vendors": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "regionsUnRestricted": {
+                                    "type": "boolean"
+                                },
+                                "domainsUnRestricted": {
+                                    "type": "boolean"
+                                },
+                                "vendorsUnRestricted": {
+                                    "type": "boolean"
+                                },
+                                "features": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "permissions": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "created": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "lastUpdated": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "_search_after": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    }
+                                },
+                                "_total_count": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "_search_after",
+                                "_total_count",
+                                "allowChildRoles",
+                                "created",
+                                "displayName",
+                                "docType",
+                                "domains",
+                                "domainsUnRestricted",
+                                "features",
+                                "id",
+                                "lastUpdated",
+                                "name",
+                                "parent",
+                                "parentId",
+                                "permissions",
+                                "regions",
+                                "regionsUnRestricted",
+                                "tenantId",
+                                "type",
+                                "unRestricted",
+                                "vendors",
+                                "vendorsUnRestricted"
+                            ],
+                            "title": "Role"
                         }
                     }
                 }
-            }
-        ]
-    },
-    {
-        "is_authorisation_required": false,
-        "test_cases": [
+            },
             {
                 "product_name": "QP",
-                "service_name": "qp-gateway-service",
-                "description": "this is placeholder description",
+                "service_name": "qp-abstraction-service",
+                "description": "Fetch inbound adapter details",
+                "identifier": "qp-abstraction-get-adapter-details",
                 "end_points": {
-                    "QA": "https://atlantis-qa4-dashboard.quantela.com/qp-gateway-service/1.0.0/public/token",
-                    "Dev": "https://qp-dev-az.quantela.com/qp-gateway-service/1.0.0/public/token"
+                    "QA": "https://atlantis-qa4-dashboard.quantela.com/abstraction/1.0.0/adapters/kjlilnsBFeMflasiwlk7"
                 },
                 "type": "POST",
                 "header": {
-                    "Authorization": "adfadfasf",
+                    "Authorization": "Bearer ",
                     "Content-Type": "application/json"
                 },
-                "input": {
-                    "QA": {
-                        "username": "dileep@apitesting.com",
-                        "password": "Quantela@12345",
-                        "grant_type": "password"
-                    },
-                    "Dev": {
-                        "username": "gopi@prague-city.com",
-                        "password": "Test@123",
-                        "grant_type": "password"
-                    }
-                },
+                "input": {},
                 "isStatic": false,
                 "responseCode": 200,
                 "expected_output": {
                     "$schema": "http://json-schema.org/draft-06/schema#",
-                    "$ref": "#/definitions/Welcome2",
+                    "$ref": "#/definitions/Welcome9",
                     "definitions": {
-                        "Welcome2": {
+                        "Welcome9": {
                             "type": "object",
                             "additionalProperties": false,
                             "properties": {
-                                "access_token": {
+                                "result": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Result"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "result"
+                            ],
+                            "title": "Welcome9"
+                        },
+                        "Result": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "docType": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "tenantId": {
+                                    "type": "string"
+                                },
+                                "meta": {
+                                    "$ref": "#/definitions/Meta"
+                                },
+                                "connectors": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "connectionTemplates": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "datasets": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "created": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "lastUpdated": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "modelSearch": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "createdBy": {
                                     "type": "string",
                                     "format": "uuid"
                                 },
-                                "refresh_token": {
+                                "createdByName": {
+                                    "type": "string"
+                                },
+                                "updatedBy": {
                                     "type": "string",
                                     "format": "uuid"
                                 },
-                                "scope": {
+                                "updatedByName": {
                                     "type": "string"
                                 },
-                                "token_type": {
-                                    "type": "string"
+                                "_search_after": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
                                 },
-                                "expires_in": {
+                                "_total_count": {
                                     "type": "integer"
                                 }
                             },
                             "required": [
-                                "access_token",
-                                "expires_in",
-                                "refresh_token",
-                                "scope",
-                                "token_type"
+                                "_search_after",
+                                "_total_count",
+                                "connectionTemplates",
+                                "connectors",
+                                "created",
+                                "createdBy",
+                                "createdByName",
+                                "datasets",
+                                "docType",
+                                "id",
+                                "lastUpdated",
+                                "meta",
+                                "modelSearch",
+                                "name",
+                                "tenantId",
+                                "updatedBy",
+                                "updatedByName"
                             ],
-                            "title": "Welcome2"
+                            "title": "Result"
+                        },
+                        "Meta": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "description": {
+                                    "type": "string"
+                                },
+                                "version": {
+                                    "type": "string",
+                                    "format": "integer"
+                                },
+                                "outputFormat": {
+                                    "type": "string"
+                                },
+                                "tags": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": {
+                                    "type": "string"
+                                },
+                                "subType": {
+                                    "type": "string"
+                                },
+                                "ingestionType": {
+                                    "type": "string"
+                                },
+                                "preConfig": {
+                                    "$ref": "#/definitions/PreConfig"
+                                },
+                                "postConfig": {
+                                    "$ref": "#/definitions/PostConfig"
+                                },
+                                "preConditionCheck": {
+                                    "type": "boolean"
+                                },
+                                "domain": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "ignoreSchema": {
+                                    "type": "boolean"
+                                },
+                                "streamsEnabled": {
+                                    "type": "boolean"
+                                },
+                                "entityType": {
+                                    "type": "string"
+                                },
+                                "eventType": {
+                                    "type": "string"
+                                },
+                                "level": {
+                                    "type": "integer"
+                                },
+                                "_id": {
+                                    "type": "string"
+                                },
+                                "schema": {
+                                    "$ref": "#/definitions/Schema"
+                                }
+                            },
+                            "required": [
+                                "_id",
+                                "description",
+                                "domain",
+                                "entityType",
+                                "eventType",
+                                "ignoreSchema",
+                                "ingestionType",
+                                "level",
+                                "outputFormat",
+                                "postConfig",
+                                "preConditionCheck",
+                                "preConfig",
+                                "schema",
+                                "streamsEnabled",
+                                "subType",
+                                "tags",
+                                "type",
+                                "version"
+                            ],
+                            "title": "Meta"
+                        },
+                        "PostConfig": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "broadcaster": {
+                                    "$ref": "#/definitions/Broadcaster"
+                                }
+                            },
+                            "required": [
+                                "broadcaster"
+                            ],
+                            "title": "PostConfig"
+                        },
+                        "Broadcaster": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "enabled"
+                            ],
+                            "title": "Broadcaster"
+                        },
+                        "PreConfig": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "receiver": {
+                                    "$ref": "#/definitions/Broadcaster"
+                                }
+                            },
+                            "required": [
+                                "receiver"
+                            ],
+                            "title": "PreConfig"
+                        },
+                        "Schema": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "inputs": {
+                                    "$ref": "#/definitions/Inputs"
+                                },
+                                "outputs": {
+                                    "$ref": "#/definitions/Outputs"
+                                }
+                            },
+                            "required": [
+                                "inputs",
+                                "outputs"
+                            ],
+                            "title": "Schema"
+                        },
+                        "Inputs": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "input": {
+                                    "$ref": "#/definitions/Input"
+                                }
+                            },
+                            "required": [
+                                "input"
+                            ],
+                            "title": "Inputs"
+                        },
+                        "Input": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "previewData": {
+                                    "type": "string"
+                                },
+                                "nodeName": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "nodeName",
+                                "previewData",
+                                "type"
+                            ],
+                            "title": "Input"
+                        },
+                        "Outputs": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "$schema": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "qt-uri-protocols": [
+                                        "http"
+                                    ]
+                                },
+                                "title": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "type": "string"
+                                },
+                                "items": {
+                                    "$ref": "#/definitions/Items"
+                                }
+                            },
+                            "required": [
+                                "$schema",
+                                "items",
+                                "title",
+                                "type"
+                            ],
+                            "title": "Outputs"
+                        },
+                        "Items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                },
+                                "properties": {
+                                    "$ref": "#/definitions/ItemsProperties"
+                                },
+                                "required": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "properties",
+                                "required",
+                                "type"
+                            ],
+                            "title": "Items"
+                        },
+                        "ItemsProperties": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "mobility": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "location": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "applicationid": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "freq": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "tempe": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "kwhimp": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "powerfactor": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "voltage": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "label": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "sid": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "physical_device": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "provider": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "last_updated": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "geo_address": {
+                                    "$ref": "#/definitions/GeoAddress"
+                                },
+                                "physical_address": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "transactionId": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "domain": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "entity_type": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "tenantId": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "metrics_ingestion": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "entity_ingestion": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "version": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "entity_id": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "updated_at": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "apperentpower": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "current": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "di1": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "activepower": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "di2": {
+                                    "$ref": "#/definitions/Activepower"
+                                },
+                                "reactivepower": {
+                                    "$ref": "#/definitions/Activepower"
+                                }
+                            },
+                            "required": [
+                                "activepower",
+                                "apperentpower",
+                                "applicationid",
+                                "current",
+                                "di1",
+                                "di2",
+                                "domain",
+                                "entity_id",
+                                "entity_ingestion",
+                                "entity_type",
+                                "freq",
+                                "geo_address",
+                                "kwhimp",
+                                "label",
+                                "last_updated",
+                                "location",
+                                "metrics_ingestion",
+                                "mobility",
+                                "physical_address",
+                                "physical_device",
+                                "powerfactor",
+                                "provider",
+                                "reactivepower",
+                                "sid",
+                                "tempe",
+                                "tenantId",
+                                "transactionId",
+                                "updated_at",
+                                "version",
+                                "voltage"
+                            ],
+                            "title": "ItemsProperties"
+                        },
+                        "Activepower": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "type": {
+                                    "$ref": "#/definitions/Type"
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ],
+                            "title": "Activepower"
+                        },
+                        "GeoAddress": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                },
+                                "properties": {
+                                    "$ref": "#/definitions/GeoAddressProperties"
+                                }
+                            },
+                            "required": [
+                                "properties",
+                                "type"
+                            ],
+                            "title": "GeoAddress"
+                        },
+                        "GeoAddressProperties": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "coordinates": {
+                                    "$ref": "#/definitions/Coordinates"
+                                },
+                                "type": {
+                                    "$ref": "#/definitions/Activepower"
+                                }
+                            },
+                            "required": [
+                                "coordinates",
+                                "type"
+                            ],
+                            "title": "GeoAddressProperties"
+                        },
+                        "Coordinates": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                },
+                                "items": {
+                                    "$ref": "#/definitions/Activepower"
+                                }
+                            },
+                            "required": [
+                                "items",
+                                "type"
+                            ],
+                            "title": "Coordinates"
+                        },
+                        "Type": {
+                            "type": "string",
+                            "enum": [
+                                "number",
+                                "string",
+                                "boolean"
+                            ],
+                            "title": "Type"
+                        }
+                    }
+                }
+            },
+            {
+                "product_name": "QP",
+                "service_name": "qp-core-service",
+                "description": "List of available Domains in the tenant",
+                "identifier": "qp-core-get-available-domains",
+                "end_points": {
+                    "QA": "https://atlantis-qa4-dashboard.quantela.com/qp-core-service/1.0.0/domains/apitesting.com"
+                },
+                "type": "GET",
+                "header": {
+                    "Authorization": "Bearer ",
+                    "Content-Type": "application/json"
+                },
+                "input": {},
+                "isStatic": false,
+                "responseCode": 200,
+                "expected_output": {
+                    "$schema": "http://json-schema.org/draft-06/schema#",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Welcome10Element"
+                    },
+                    "definitions": {
+                        "Welcome10Element": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "docType": {
+                                    "$ref": "#/definitions/DocType"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "displayName": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "$ref": "#/definitions/Status"
+                                },
+                                "tenantId": {
+                                    "$ref": "#/definitions/TenantID"
+                                },
+                                "_search_after": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "created": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "lastUpdated": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "updatedBy": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "updatedByName": {
+                                    "$ref": "#/definitions/AtedByName"
+                                },
+                                "createdBy": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "createdByName": {
+                                    "$ref": "#/definitions/AtedByName"
+                                }
+                            },
+                            "required": [
+                                "_search_after",
+                                "created",
+                                "displayName",
+                                "docType",
+                                "id",
+                                "lastUpdated",
+                                "name",
+                                "status",
+                                "tenantId"
+                            ],
+                            "title": "Welcome10Element"
+                        },
+                        "AtedByName": {
+                            "type": "string",
+                            "enum": [
+                                "dileep somalaraju",
+                                "Dileep CONTCREATOR",
+                                "Rajendra Prasad"
+                            ],
+                            "title": "AtedByName"
+                        },
+                        "DocType": {
+                            "type": "string",
+                            "enum": [
+                                "Domain"
+                            ],
+                            "title": "DocType"
+                        },
+                        "Status": {
+                            "type": "string",
+                            "enum": [
+                                "active",
+                                ""
+                            ],
+                            "title": "Status"
+                        },
+                        "TenantID": {
+                            "type": "string",
+                            "enum": [
+                                "apitesting.com"
+                            ],
+                            "title": "TenantID"
+                        }
+                    }
+                }
+            },
+            {
+                "product_name": "QP",
+                "service_name": "qp-EE-service",
+                "description": "Count of SOP's available in the given tenant ",
+                "identifier": "qp-EE-service-get-SOP-count",
+                "end_points": {
+                    "QA": "https://atlantis-qa4-dashboard.quantela.com/t/apitesting.com/ee/1.0.0/sop/count"
+                },
+                "type": "GET",
+                "header": {
+                    "Authorization": "Bearer ",
+                    "Content-Type": "application/json"
+                },
+                "input": {},
+                "isStatic": false,
+                "responseCode": 200,
+                "expected_output": {
+                    "$schema": "http://json-schema.org/draft-06/schema#",
+                    "$ref": "#/definitions/Welcome4",
+                    "definitions": {
+                        "Welcome4": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "count": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "count"
+                            ],
+                            "title": "Welcome4"
+                        }
+                    }
+                }
+            },
+            {
+                "product_name": "QP",
+                "service_name": "qp-abstraction-service",
+                "description": "Fetch all Datasets&Adapters of the tenant",
+                "identifier": "qp-abstraction-get-dataset-adapters",
+                "end_points": {
+                    "QA": "https://atlantis-qa4-dashboard.quantela.com/abstraction/1.0.0/webhooks/fetchalldatasets"
+                },
+                "type": "POST",
+                "header": {
+                    "Authorization": "Bearer ",
+                    "Content-Type": "application/json"
+                },
+                "input": {},
+                "isStatic": false,
+                "responseCode": 200,
+                "expected_output": {
+                    "$schema": "http://json-schema.org/draft-06/schema#",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Welcome1Element"
+                    },
+                    "definitions": {
+                        "Welcome1Element": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "tenantId": {
+                                    "$ref": "#/definitions/TenantID"
+                                },
+                                "meta": {
+                                    "$ref": "#/definitions/Meta"
+                                },
+                                "connectors": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "lastUpdated": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "id": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "connectors",
+                                "id",
+                                "lastUpdated",
+                                "meta",
+                                "name",
+                                "tenantId"
+                            ],
+                            "title": "Welcome1Element"
+                        },
+                        "Meta": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "description": {
+                                    "type": "string"
+                                },
+                                "version": {
+                                    "type": "string",
+                                    "format": "integer"
+                                },
+                                "outputFormat": {
+                                    "$ref": "#/definitions/OutputFormat"
+                                },
+                                "tags": {
+                                    "anyOf": [
+                                        {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "type": {
+                                    "$ref": "#/definitions/Type"
+                                },
+                                "preConfig": {
+                                    "$ref": "#/definitions/PreConfig"
+                                },
+                                "postConfig": {
+                                    "$ref": "#/definitions/PostConfig"
+                                },
+                                "streamsEnabled": {
+                                    "type": "boolean"
+                                },
+                                "preConditionCheck": {
+                                    "type": "boolean"
+                                },
+                                "logsFromMenu": {
+                                    "type": "boolean"
+                                },
+                                "level": {
+                                    "type": "integer"
+                                },
+                                "ignoreSchema": {
+                                    "type": "boolean"
+                                },
+                                "scheduler": {
+                                    "$ref": "#/definitions/Scheduler"
+                                },
+                                "cacheExpiry": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "roundToClock": {
+                                    "$ref": "#/definitions/RoundToClock"
+                                },
+                                "enableCaching": {
+                                    "type": "boolean"
+                                },
+                                "domain": {
+                                    "$ref": "#/definitions/Domain"
+                                },
+                                "isInfoLogsEnabled": {
+                                    "type": "boolean"
+                                },
+                                "subType": {
+                                    "$ref": "#/definitions/SubType"
+                                },
+                                "ingestionType": {
+                                    "$ref": "#/definitions/IngestionType"
+                                },
+                                "entityType": {
+                                    "type": "string"
+                                },
+                                "eventType": {
+                                    "$ref": "#/definitions/EventType"
+                                },
+                                "_id": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "description",
+                                "outputFormat",
+                                "postConfig",
+                                "preConditionCheck",
+                                "preConfig",
+                                "tags",
+                                "type",
+                                "version"
+                            ],
+                            "title": "Meta"
+                        },
+                        "PostConfig": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "broadcaster": {
+                                    "$ref": "#/definitions/Broadcaster"
+                                }
+                            },
+                            "required": [
+                                "broadcaster"
+                            ],
+                            "title": "PostConfig"
+                        },
+                        "Broadcaster": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "otherBroadcasters": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/OtherBroadcaster"
+                                    }
+                                },
+                                "builtInBroadcaster": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "enabled"
+                            ],
+                            "title": "Broadcaster"
+                        },
+                        "OtherBroadcaster": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "key": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "id",
+                                "key"
+                            ],
+                            "title": "OtherBroadcaster"
+                        },
+                        "PreConfig": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "receiver": {
+                                    "$ref": "#/definitions/Receiver"
+                                }
+                            },
+                            "required": [
+                                "receiver"
+                            ],
+                            "title": "PreConfig"
+                        },
+                        "Receiver": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "connectorId": {
+                                    "type": "string"
+                                },
+                                "subscriberTopicName": {
+                                    "type": "string"
+                                },
+                                "inputMapping": {
+                                    "$ref": "#/definitions/InputMapping"
+                                },
+                                "connectorType": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "enabled"
+                            ],
+                            "title": "Receiver"
+                        },
+                        "InputMapping": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "952.input": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "952.input"
+                            ],
+                            "title": "InputMapping"
+                        },
+                        "RoundToClock": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "enabled"
+                            ],
+                            "title": "RoundToClock"
+                        },
+                        "Scheduler": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "expression": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "selectedCronTab": {
+                                    "type": "string"
+                                },
+                                "aesId": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "enabled"
+                            ],
+                            "title": "Scheduler"
+                        },
+                        "Domain": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                {
+                                    "type": "string"
+                                }
+                            ],
+                            "title": "Domain"
+                        },
+                        "EventType": {
+                            "type": "string",
+                            "enum": [
+                                "",
+                                "gunshot"
+                            ],
+                            "title": "EventType"
+                        },
+                        "IngestionType": {
+                            "type": "string",
+                            "enum": [
+                                "entity",
+                                "event"
+                            ],
+                            "title": "IngestionType"
+                        },
+                        "OutputFormat": {
+                            "type": "string",
+                            "enum": [
+                                "CSV",
+                                "GeoJSON",
+                                "JSON"
+                            ],
+                            "title": "OutputFormat"
+                        },
+                        "SubType": {
+                            "type": "string",
+                            "enum": [
+                                "inbound",
+                                "outbound"
+                            ],
+                            "title": "SubType"
+                        },
+                        "Type": {
+                            "type": "string",
+                            "enum": [
+                                "Dataset",
+                                "Adapter"
+                            ],
+                            "title": "Type"
+                        },
+                        "TenantID": {
+                            "type": "string",
+                            "enum": [
+                                "apitesting.com"
+                            ],
+                            "title": "TenantID"
                         }
                     }
                 }
