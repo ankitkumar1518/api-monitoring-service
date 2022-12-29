@@ -38,7 +38,7 @@ async function makeRequest(config, authRequired, authData) {
                 isValid = validateSchema(JSON.parse(response), config.expected_output)
             }
             if (isValid === true) {
-                stats["Status"] = "Pass"
+                stats["Status"] = 1
                 stats["Latency"] = `${(new Date - start)/1000}s`
             } else {
                 const error = new Error('The response does not match the expected output');
@@ -46,7 +46,7 @@ async function makeRequest(config, authRequired, authData) {
                 throw error
             }
         } catch (error) {
-            stats["Status"] = "Fail"
+            stats["Status"] = 0
             stats["Latency"] = `${(new Date - start)/1000}s`
             if (error.message) {
                 stats["Error"] = error.message;
